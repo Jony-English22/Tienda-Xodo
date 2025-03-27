@@ -11,6 +11,55 @@ import javax.swing.table.DefaultTableModel;
 
 public class CUsuarios {
     
+    private Integer id;
+    private String nombre;
+    private String direccion;
+    private String correo;
+    
+    public CUsuarios() {
+        
+    }
+    
+    public CUsuarios(Integer pId, String pNombre, String pDireccion, String pCorreo) {
+        this.id        = pId;
+        this.nombre    = pNombre;
+        this.direccion = pDireccion;
+        this.correo    = pCorreo;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public String getDireccion() {
+        return direccion;
+    }
+
+    public String getCorreo() {
+        return correo;
+    }
+
+    public void setId(Integer pId) {
+        this.id = id;
+    }
+
+    public void setNombre(String pNombre) {
+        this.nombre = nombre;
+    }
+
+    public void setDireccion(String pDireccion) {
+        this.direccion = direccion;
+    }
+
+    public void setCorreo(String pCorreo) {
+        this.correo = correo;
+    }
+    
+    
         public void mostrarUsuarios(JTable tablaUsuarios) {
             CConexion conexion = new CConexion();
             DefaultTableModel modelo = new DefaultTableModel();
