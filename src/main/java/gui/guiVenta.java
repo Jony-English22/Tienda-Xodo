@@ -6,19 +6,23 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import java.sql.Connection;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
 
 
-public class TiendaXODO extends javax.swing.JFrame {
+public class guiVenta extends javax.swing.JFrame {
     
     public double precio = 0.00;
     public int cantidad = 0;
-    List<Object> listVenta = new ArrayList<>();
-        
-    public TiendaXODO() {
+    ArrayList<guiVenta> listVenta = new ArrayList<>();
+    DefaultTableModel modelo = new DefaultTableModel();
+  
+  
+    public guiVenta() {
         initComponents();   
         this.setTitle("TIENDA XODÓ");
         Image icono = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/img/Logo Xodo.jpg"));
@@ -37,7 +41,10 @@ public class TiendaXODO extends javax.swing.JFrame {
         
         Venta venta = new Venta();
         venta.mostrarVenta(tblProducto);
+        System.out.println(listVenta);
         listaProducto();
+        actualizarTabla();
+        borrarVenta();
         //venta.actualizarTabla(tblProducto);
     }
     
@@ -106,6 +113,10 @@ public class TiendaXODO extends javax.swing.JFrame {
         return precios;  
     }
     
+    public void actualizarTabla() {
+    
+    }
+     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -374,13 +385,14 @@ public class TiendaXODO extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
-        int cantidad = (int) spnCantidad.getValue();
-        String producto = cmbProducto.getSelectedItem().toString();
-        double precio = Double.parseDouble(lblPrecio.getText());
-        Venta venta = new Venta();
-        //venta.agregarVentaABaseDeDatos(cantidad, producto, precio);
+        
+        
     }//GEN-LAST:event_btnAgregarActionPerformed
 
+    public void borrarVenta() {
+        precio = 0;
+        cantidad = 0;
+    }
     private void tfIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfIdActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_tfIdActionPerformed

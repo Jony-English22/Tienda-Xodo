@@ -1,6 +1,6 @@
 package app;
 
-import gui.TiendaXODO;
+import gui.guiVenta;
 import gui.Usuario;
 import gui.Login;
 import gui.Producto;
@@ -10,7 +10,7 @@ public class Main {
         
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new TiendaXODO().setVisible(true);
+                new guiVenta().setVisible(true);
                 //new Usuario().setVisible(true);
                 //new Login().setVisible(true);
                 //new Producto().setVisible(true); 
