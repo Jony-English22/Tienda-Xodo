@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package cls;
 
 import java.sql.PreparedStatement;
@@ -13,10 +9,6 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
-/**
- *
- * @author arima
- */
 public class CUsuarios {
     
         public void mostrarUsuarios(JTable tablaUsuarios) {
