@@ -15,7 +15,7 @@ public class Main {
                 //new Login().setVisible(true);
                 new Producto().setVisible(true);
                 
-                //PRUEBA DE COMMIT PRUEBA
+                //PRUEBA DE COMMIT 
             }
         }); 
     }
