@@ -14,8 +14,10 @@ import javax.swing.JPanel;
 
 public class TiendaXODO extends javax.swing.JFrame {
     
-    private double precio = 0;
-    
+    public double precio = 0.00;
+    public int cantidad = 0;
+    List<Object> listVenta = new ArrayList<>();
+        
     public TiendaXODO() {
         initComponents();   
         this.setTitle("TIENDA XODÓ");
@@ -36,10 +38,7 @@ public class TiendaXODO extends javax.swing.JFrame {
         Venta venta = new Venta();
         venta.mostrarVenta(tblProducto);
         listaProducto();
-    }
-
-    public void calcularPrecio() {
-      
+        venta.actualizarTabla(tblProducto);
     }
     
     public String aMoneda(double precio) {
@@ -75,12 +74,26 @@ public class TiendaXODO extends javax.swing.JFrame {
         }
     }
     
-    public void calculaPrecio() {
-     
+    public void calcularPrecio() {
+     int index = cmbProducto.getSelectedIndex();
+     cantidad = Integer.parseInt(spnCantidad.getValue().toString());
+     if(index >=0 ) {
+         List<Double> precios = obtenerPrecio();
+         if (index < precios.size()) {
+             precio = precios.get(index);
+             lblPrecio.setText(moneda(precio));
+             Double importe = precio * cantidad;
+             lblImporte.setText(moneda(importe));
+         }
+     }
+        
+    }
+    
+    public String moneda(Double precio) {
+        return "$" + Math.round(precio*100.00/100.00) + " MXM";
     }
     
     public List<Double> obtenerPrecio() {
-        int index = cmbProducto.getSelectedIndex();
         Venta venta = new Venta();
         List<String> productos = venta.extraerProductos();
         List<Double> precios = new ArrayList<>();
@@ -92,6 +105,7 @@ public class TiendaXODO extends javax.swing.JFrame {
         
         return precios;  
     }
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -134,8 +148,10 @@ public class TiendaXODO extends javax.swing.JFrame {
         jLabel15 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
         lbldb = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        tfId = new javax.swing.JTextField();
         cmbProducto = new javax.swing.JComboBox<>();
+        jLabel17 = new javax.swing.JLabel();
+        jTextField3 = new javax.swing.JTextField();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenu8 = new javax.swing.JMenu();
@@ -195,7 +211,7 @@ public class TiendaXODO extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setSize(new java.awt.Dimension(700, 800));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        getContentPane().add(lblLogo, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 20, 190, 70));
+        getContentPane().add(lblLogo, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 10, 190, 70));
 
         lblSubtotal.setFont(new java.awt.Font("Poppins", 0, 14)); // NOI18N
         lblSubtotal.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
@@ -215,19 +231,24 @@ public class TiendaXODO extends javax.swing.JFrame {
                 btnAgregarActionPerformed(evt);
             }
         });
-        getContentPane().add(btnAgregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 130, 90, 70));
+        getContentPane().add(btnAgregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 120, 90, 70));
 
         jLabel5.setFont(new java.awt.Font("Poppins", 0, 14)); // NOI18N
         jLabel5.setText("PRECIO");
         getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 140, -1, -1));
 
         spnCantidad.setModel(new javax.swing.SpinnerNumberModel(1, 1, null, 1));
+        spnCantidad.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                spnCantidadStateChanged(evt);
+            }
+        });
         getContentPane().add(spnCantidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 190, 70, -1));
 
         lblPrecio.setFont(new java.awt.Font("Poppins", 0, 14)); // NOI18N
         lblPrecio.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lblPrecio.setText("$0.00 MXM");
-        getContentPane().add(lblPrecio, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 140, 100, -1));
+        getContentPane().add(lblPrecio, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 140, 100, -1));
 
         tblProducto.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -247,7 +268,7 @@ public class TiendaXODO extends javax.swing.JFrame {
         lblImporte.setFont(new java.awt.Font("Poppins", 0, 14)); // NOI18N
         lblImporte.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lblImporte.setText("$0.00 MXM");
-        getContentPane().add(lblImporte, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 190, 100, -1));
+        getContentPane().add(lblImporte, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 190, 110, -1));
 
         jLabel8.setFont(new java.awt.Font("Poppins", 0, 14)); // NOI18N
         jLabel8.setText("SUBTOTAL");
@@ -277,27 +298,27 @@ public class TiendaXODO extends javax.swing.JFrame {
 
         jLabel14.setFont(new java.awt.Font("Arial Black", 0, 36)); // NOI18N
         jLabel14.setText("TIENDITA");
-        getContentPane().add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 30, 210, 50));
+        getContentPane().add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 10, 210, 50));
 
         jLabel13.setFont(new java.awt.Font("Poppins", 0, 14)); // NOI18N
         jLabel13.setText("PRODUCTO");
         getContentPane().add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 140, -1, -1));
 
         jLabel15.setFont(new java.awt.Font("Poppins", 0, 14)); // NOI18N
-        jLabel15.setText("CLIENTE");
-        getContentPane().add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 100, -1, -1));
+        jLabel15.setText("ID");
+        getContentPane().add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 80, -1, -1));
 
         jLabel16.setFont(new java.awt.Font("Poppins", 0, 14)); // NOI18N
         jLabel16.setText("00/00/0000");
         getContentPane().add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 100, -1, -1));
         getContentPane().add(lbldb, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 20, 60, 40));
 
-        jTextField2.addActionListener(new java.awt.event.ActionListener() {
+        tfId.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField2ActionPerformed(evt);
+                tfIdActionPerformed(evt);
             }
         });
-        getContentPane().add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 100, 150, -1));
+        getContentPane().add(tfId, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 80, -1, -1));
 
         cmbProducto.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         cmbProducto.addActionListener(new java.awt.event.ActionListener() {
@@ -306,6 +327,17 @@ public class TiendaXODO extends javax.swing.JFrame {
             }
         });
         getContentPane().add(cmbProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 140, 200, -1));
+
+        jLabel17.setFont(new java.awt.Font("Poppins", 0, 14)); // NOI18N
+        jLabel17.setText("CLIENTE");
+        getContentPane().add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 110, -1, -1));
+
+        jTextField3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField3ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 110, 150, -1));
 
         jMenu1.setText("File");
 
@@ -342,12 +374,16 @@ public class TiendaXODO extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
-        // TODO add your handling code here:
+        int cantidad = (int) spnCantidad.getValue();
+        String producto = cmbProducto.getSelectedItem().toString();
+        double precio = Double.parseDouble(lblPrecio.getText());
+        Venta venta = new Venta();
+        //venta.agregarVentaABaseDeDatos(cantidad, producto, precio);
     }//GEN-LAST:event_btnAgregarActionPerformed
 
-    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
+    private void tfIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfIdActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField2ActionPerformed
+    }//GEN-LAST:event_tfIdActionPerformed
 
     private void itemUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemUserActionPerformed
         Usuario user = new Usuario();
@@ -360,7 +396,16 @@ public class TiendaXODO extends javax.swing.JFrame {
     }//GEN-LAST:event_itemUserMouseClicked
 
     private void cmbProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbProductoActionPerformed
+        calcularPrecio();
     }//GEN-LAST:event_cmbProductoActionPerformed
+
+    private void spnCantidadStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_spnCantidadStateChanged
+        calcularPrecio();
+    }//GEN-LAST:event_spnCantidadStateChanged
+
+    private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField3ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -373,6 +418,7 @@ public class TiendaXODO extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -395,7 +441,7 @@ public class TiendaXODO extends javax.swing.JFrame {
     private javax.swing.JPopupMenu jPopupMenu1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSpinner jSpinner2;
-    private javax.swing.JTextField jTextField2;
+    private javax.swing.JTextField jTextField3;
     private javax.swing.JLabel lblImporte;
     private javax.swing.JLabel lblIva;
     private javax.swing.JLabel lblLogo;
@@ -411,5 +457,6 @@ public class TiendaXODO extends javax.swing.JFrame {
     private java.awt.MenuBar menuBar2;
     private javax.swing.JSpinner spnCantidad;
     private javax.swing.JTable tblProducto;
+    private javax.swing.JTextField tfId;
     // End of variables declaration//GEN-END:variables
 }
