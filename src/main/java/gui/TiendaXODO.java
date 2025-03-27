@@ -38,7 +38,7 @@ public class TiendaXODO extends javax.swing.JFrame {
         Venta venta = new Venta();
         venta.mostrarVenta(tblProducto);
         listaProducto();
-        venta.actualizarTabla(tblProducto);
+        //venta.actualizarTabla(tblProducto);
     }
     
     public String aMoneda(double precio) {
