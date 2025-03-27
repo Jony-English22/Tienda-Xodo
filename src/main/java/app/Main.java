@@ -10,12 +10,11 @@ public class Main {
         
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                //new TiendaXODO().setVisible(true);
+                new TiendaXODO().setVisible(true);
                 //new Usuario().setVisible(true);
                 //new Login().setVisible(true);
-                new Producto().setVisible(true);
-                
-                //PRUEBA DE COMMIT 
+                //new Producto().setVisible(true); 
+              
             }
         }); 
     }
